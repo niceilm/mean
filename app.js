@@ -27,25 +27,26 @@ if('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
-app.get('/users', user.list);
+app.all('/', function(req, res) {
+  res.sendfile(path.join(__dirname, 'public/app/', 'index.html'));
+});
 
 // select
-app.get('/todos', function(req, res) {
+app.get('/api/todos', function(req, res) {
   db.Todo.findAll().success(function(todos) {
     res.json(todos);
   });
 });
 
 // create
-app.post('/todos', function(req, res) {
+app.post('/api/todos', function(req, res) {
   db.Todo.create(req.body).success(function(todo) {
     res.json();
   });
 });
 
 // update
-app.put('/todos/:todoId', function(req, res) {
+app.put('/api/todos/:todoId', function(req, res) {
   var todoId = req.param('todoId');
   db.Todo.find(todoId).success(function(todo) {
     todo.updateAttributes(req.body, ['title']).success(function() {
@@ -55,7 +56,7 @@ app.put('/todos/:todoId', function(req, res) {
 });
 
 // delete
-app.del('/todos/:todoId', function(req, res) {
+app.del('/api/todos/:todoId', function(req, res) {
   var todoId = req.param('todoId');
   db.Todo.find(todoId).success(function(todo) {
     todo.destroy().success(function() {
@@ -65,8 +66,12 @@ app.del('/todos/:todoId', function(req, res) {
 });
 
 // select target
-app.get('/todos/:todoId', function(req, res) {
-  res.json({});
+app.get('/api/todos/:todoId', function(req, res) {
+  var todoId = req.param('todoId');
+  db.Todo.find(todoId).success(function(todo) {
+    res.json(todo);
+  });
+
 });
 
 db.sequelize.sync({ force : false }).complete(function(err) {

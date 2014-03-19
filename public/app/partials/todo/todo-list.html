@@ -1,4 +1,4 @@
-<div>
+<div ng-controller="TodoCtrl">
   <form ng-submit="addTodo()">
     <input type="text" value="{{title}}" ng-model="title" placeholder="입력해주세요~">
   </form>
@@ -9,6 +9,7 @@
       <input type="text" value="{{todo.title}}" style="width:200px" ng-model="todo.title" ng-show="!isShowLabel">
       <button ng-click="isShowLabel=true;updateTodo(todo)" ng-show="!isShowLabel">수정</button>
       <button ng-click="delTodo(todo)">삭제</button>
+      <a ng-href="#/detail/{{todo.id}}">상세보기</a>
     </li>
   </ul>
 </div>
