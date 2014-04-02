@@ -2,9 +2,12 @@
 var meanTodoApp = angular.module('meanTodoApp', ['ngRoute', 'ngResource']);
 
 meanTodoApp.
-  factory('TodoService', ['$resource', function($resource) {
-    return $resource('/api/todos/:todoId', {todoId : '@id'}, {'update' : {method : 'PUT'}});
-  }]);
+  factory('TodoService', function($resource) {
+    return $resource('/api/todos/:todoId', {todoId : '@id'}, {
+      'update' : {method : 'PUT'},
+      'complete' : {method : 'PUT'}
+    });
+  });
 
 meanTodoApp.
   controller('TodoCtrl', function($scope, TodoService) {
@@ -15,7 +18,7 @@ meanTodoApp.
     load();
 
     function load() {
-      $scope.todos = TodoService.query(function(results) {
+      TodoService.query(function(results) {
         $scope.todos = results;
       });
     }
@@ -31,6 +34,8 @@ meanTodoApp.
     }
 
     function delTodo(todo) {
+//      $scope.todos.pop();
+      console.log(todo);
       todo.$remove(function() {
         load();
       });
@@ -38,11 +43,9 @@ meanTodoApp.
   }).
 
   controller('TodoDetailCtrl', function($scope, $routeParams, TodoService) {
-    var todo = TodoService.get($routeParams, function() {
-      todo.$get(function() {
-        $scope.todo = todo;
-      });
-    });
+    console.log($routeParams);
+    $scope.todo = TodoService.get($routeParams);
+//    console.log(todo);
   });
 
 meanTodoApp.config(function($routeProvider) {

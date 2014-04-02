@@ -1,6 +1,7 @@
 <div ng-controller="TodoCtrl">
   <form ng-submit="addTodo()">
-    <input type="text" value="{{title}}" ng-model="title" placeholder="입력해주세요~">
+    <input type="text" ng-model="title" placeholder="입력해주세요~">
+    <span style="color:red">{{title}}</span>
   </form>
   <ul>
     <li ng-repeat="todo in todos">

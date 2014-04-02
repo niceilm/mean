@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Parker's TODO</title>
+  <meta charset="UTF-8">
+  <style>
+    .lineThrough {
+      text-decoration: line-through
+    }
+  </style>
+</head>
+
+<body data-ng-app="ParkerTodoApp">
+<div ng-controller="TodoCtrl">
+  <input type="text" ng-model="name">
+  <button data-ng-click="addTodo()">추가</button>
+  <ul>
+    <li data-ng-repeat="todo in todos|orderBy:-createdAt" ng-class="{'lineThrough':todo.complete}">
+      <input type="checkbox" ng-change="changeComplete(todo)" ng-model="todo.complete">
+      <span>{{todo.title}}</span>
+      <span>{{todo.createdAt|date:'yyyy-MM-dd - HH:mm'}}</span>
+      <button ng-click="removeTodo(todo,$event)">삭제</button>
+    </li>
+  </ul>
+</div>
+
+<script src="lib/angular/angular.js"></script>
+<script src="lib/angular/angular-resource.js"></script>
+<script src="lib/angular/angular-route.js"></script>
+<script src="lib/angular/angular-cookies.js"></script>
+<script src="lib/angular/angular-sanitize.js"></script>
+<script src="lib/angular/angular-touch.js"></script>
+<script src="lib/angular/angular-locale_ko-kr.js"></script>
+<script>
+  // NGMIN
+  var ParkerTodoApp = angular.module('ParkerTodoApp', ['ngRoute', 'ngResource']);
+  ParkerTodoApp.controller('TodoCtrl', function($scope, $resource) {
+    //    $scope.name = "Hello world";
+
+    // init
+
+    var resource = $resource('http://mean.niceilm.net/api/todos/:todoId', {todoId : '@id'}, {
+      //      'query' : {method : 'GET', isArray : true},
+      'update' : {method : 'PUT'},
+      'complete' : {method : 'PUT'}
+    });
+    loadTodo();
+    $scope.addTodo = addTodo;
+    $scope.removeTodo = removeTodo;
+    $scope.changeComplete = changeComplete;
+
+    function changeComplete(todo) {
+      console.log(todo);
+      todo.$update(function() {
+        loadTodo();
+      });
+    }
+
+    function removeTodo(todo) {
+      resource.remove({todoId : todo.id}, function() {
+        loadTodo();
+      });
+      todo.$remove(function() {
+        loadTodo();
+      });
+    }
+
+    function loadTodo() {
+      console.log("function loadTodo() {");
+      var results = resource.query(function() {
+        $scope.todos = results;
+      });
+    }
+
+    function addTodo() {
+      resource.save({title : $scope.name}, function() {
+        loadTodo();
+      });
+    }
+  });
+</script>
+</body>
+</html>
