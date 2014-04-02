@@ -20,8 +20,6 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
-app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public/app')));
 app.use(cors({
   'origin' : true,
   'credentials' : true,
@@ -29,6 +27,8 @@ app.use(cors({
   'methods' : ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
   'maxAge' : 32000
 }));
+app.use(app.router);
+app.use(express.static(path.join(__dirname, 'public/app')));
 
 // development only
 if('development' == app.get('env')) {
