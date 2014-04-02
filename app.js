@@ -7,6 +7,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var cors = require('cors');
 var db = require('./models');
 var app = express();
 
@@ -21,6 +22,13 @@ app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public/app')));
+app.use(cors({
+  'origin' : true,
+  'credentials' : true,
+  'headers' : ['X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Versioneh '],
+  'methods' : ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+  'maxAge' : 32000
+}));
 
 // development only
 if('development' == app.get('env')) {
@@ -28,7 +36,7 @@ if('development' == app.get('env')) {
 }
 
 app.all('/', function(req, res) {
-  res.sendfile(path.join(__dirname, 'public/app/', 'index.html'));
+  res.sendfile(path.join(__dirname, 'public/app/', 'parker.html'));
 });
 
 // select

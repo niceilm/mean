@@ -1,22 +1,23 @@
 {
-  "name" : "application-name",
-  "version" : "0.0.1",
-  "private" : true,
-  "scripts" : {
-    "start" : "node app.js"
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
   },
-  "dependencies" : {
-    "express" : "3.4.8",
-    "jade" : "*",
-    "sequelize" : "~1.7.0",
-    "sqlite3" : "~2.2.0",
-    "lodash" : "~2.4.1"
+  "dependencies": {
+    "express": "3.4.8",
+    "jade": "*",
+    "sequelize": "~1.7.0",
+    "sqlite3": "~2.2.0",
+    "lodash": "~2.4.1",
+    "cors": "^2.2.0"
   },
-  "devDependencies" : {
-    "phantomjs" : "~1.9",
-    "karma" : "~0.10",
-    "karma-junit-reporter" : "~0.1",
-    "karma-jasmine" : "~0.1",
-    "protractor" : "~0.17.0"
+  "devDependencies": {
+    "phantomjs": "~1.9",
+    "karma": "~0.10",
+    "karma-junit-reporter": "~0.1",
+    "karma-jasmine": "~0.1",
+    "protractor": "~0.17.0"
   }
 }
