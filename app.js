@@ -57,7 +57,7 @@ app.post('/api/todos', function(req, res) {
 app.put('/api/todos/:todoId', function(req, res) {
   var todoId = req.param('todoId');
   db.Todo.find(todoId).success(function(todo) {
-    todo.updateAttributes(req.body, ['title']).success(function() {
+    todo.updateAttributes(req.body, ['title', 'complete']).success(function() {
       res.json();
     });
   });
