@@ -13,7 +13,7 @@ module.exports = router;
 
 // select
 function selectAll(req, res) {
-  db.User.findAll().success(function(todos) {
+  db.Todo.findAll().success(function(todos) {
     res.json(todos);
   });
 }
@@ -21,7 +21,7 @@ function selectAll(req, res) {
 
 // create
 function create(req, res) {
-  db.User.create(req.body).success(function(todo) {
+  db.Todo.create(req.body).success(function(todo) {
     res.json();
   });
 }
@@ -29,7 +29,7 @@ function create(req, res) {
 // update
 function update(req, res) {
   var todoId = req.param('todoId');
-  db.User.find(todoId).success(function(todo) {
+  db.Todo.find(todoId).success(function(todo) {
     todo.updateAttributes(req.body, ['title', 'complete']).success(function() {
       res.json();
     });
@@ -39,7 +39,7 @@ function update(req, res) {
 // delete
 function remove(req, res) {
   var todoId = req.param('todoId');
-  db.User.find(todoId).success(function(todo) {
+  db.Todo.find(todoId).success(function(todo) {
     todo.destroy().success(function() {
       res.json();
     });
@@ -49,7 +49,7 @@ function remove(req, res) {
 // select target
 function selectOne(req, res) {
   var todoId = req.param('todoId');
-  db.User.find(todoId).success(function(todo) {
+  db.Todo.find(todoId).success(function(todo) {
     res.json(todo);
   });
 }

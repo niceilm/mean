@@ -6,12 +6,17 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.4.8",
-    "jade": "*",
+    "express": "4.0.0",
     "sequelize": "~1.7.0",
     "sqlite3": "~2.2.0",
     "lodash": "~2.4.1",
-    "cors": "^2.2.0"
+    "cors": "^2.2.0",
+    "static-favicon": "^1.0.2",
+    "morgan": "^1.0.0",
+    "serve-static": "^1.0.4",
+    "body-parser": "^1.0.2",
+    "method-override": "^1.0.0",
+    "errorhandler": "^1.0.0"
   },
   "devDependencies": {
     "phantomjs": "~1.9",
